@@ -7,7 +7,7 @@ Created on Tue May 11 10:15:55 2021
 
 #### Importation --------------------------------------------------------------------------------------------------------
 import nibabel as nib
-from Metrique import perf_measure_seg_monomodale, coff_kappa, coff_dice, coff_jaccard, erreurs_martin, carte_erreur_martin
+from metrics import perf_measure_seg_monomodale, coff_kappa, coff_dice, coff_jaccard, erreurs_martin, carte_erreur_martin
 
 
 
@@ -17,7 +17,7 @@ from Metrique import perf_measure_seg_monomodale, coff_kappa, coff_dice, coff_ja
 #Segmentation_auto = nib.load("/hpc/meca/users/essamlali.a/manuel_segmentation/sinia_seg_ref/sub-032155_ses-001_run-1_brain_mask_T2.nii.gz")
 #Segmentation_ref = nib.load("/hpc/meca/users/essamlali.a/manuel_segmentation/sinia_seg_ref/sub-032155_ses-001_run-1_brain_mask_T2.nii.gz")
 
-def compute_all_metrics (seg_auto,seg_ref, pref = "img_") :
+def compute_all_metrics (seg_auto, seg_ref, pref = "img_") :
     
     data_set_auto = seg_auto.get_data()     
     data_set_ref = seg_ref.get_data()

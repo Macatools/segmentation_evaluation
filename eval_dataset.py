@@ -9,7 +9,7 @@ auto_analysis_names = ["SPM_native", "SPM_native_T1", "ANTS", "ANTS_T1"]
 
 dataset_dirs = ["ucdavis"]
 
-from evaluate_Seg_Monomodale import compute_all_metrics
+from eval_monoclass_seg import compute_all_metrics
 
 
 import pandas as pd
@@ -44,7 +44,7 @@ def eval_monomodal_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
 
                 eval_name = "manual-{}".format(auto_analysis_name)
 
-                list_res = evaluate_Seg_Monomodale
+                list_res = compute_all_metrics
                 (man_mask_file, auto_mask_file, pref = os.path.join(res_eval_path, sub + "_" + ses + "_" + eval_name + "_")
 
                 list_res.insert(eval_name, 0)

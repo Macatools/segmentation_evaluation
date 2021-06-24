@@ -10,7 +10,7 @@ Created on Tue May 11 10:11:05 2021
 
 #### Importation --------------------------------------------------------------------------------------------------------
 import nibabel as nib
-from Metrique import intraclass_correlation, perf_measure_seg_multimodale, coff_kappa, coff_dice, coff_jaccard 
+from metrics import intraclass_correlation, perf_measure_seg_multimodale, coff_kappa, coff_dice, coff_jaccard
 
 
 
