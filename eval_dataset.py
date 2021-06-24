@@ -28,6 +28,9 @@ def eval_monomodal_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
     subjects = layout.get_subjects()
     sessions = layout.get_sessions()
 
+    print(subjects)
+    print(sessions)
+
     res_eval_path = os.path.join(data_dir, "derivatives", "evaluation_results")
 
     try:
@@ -45,6 +48,8 @@ def eval_monomodal_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
                 auto_mask_file = os.path.join(data_dir, "derivatives", auto_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
                 eval_name = "manual-{}".format(auto_analysis_name)
+
+                print("Comparing {} and {}".format(man_mask_file, auto_mask_file))
 
                 list_res = compute_all_metrics(
                     man_mask_file, auto_mask_file,
