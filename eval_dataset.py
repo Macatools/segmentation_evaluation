@@ -9,7 +9,7 @@ from eval_monoclass_seg import compute_all_metrics
 
 data_path = "/hpc/meca/data/Macaques/Macaque_hiphop/results"
 
-auto_analysis_names = ["SPM_native", "SPM_native_T1", "ANTS", "ANTS_T1"]
+auto_analysis_names = ["macapype_SPM_native", "macapype_SPM_native_T1", "macapype_ANTS", "macapype_ANTS_T1"]
 
 dataset_dirs = ["ucdavis"]
 
