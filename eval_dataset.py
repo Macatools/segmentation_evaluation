@@ -44,8 +44,9 @@ def eval_monomodal_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
 
                 eval_name = "manual-{}".format(auto_analysis_name)
 
-                list_res = compute_all_metrics
-                (man_mask_file, auto_mask_file, pref = os.path.join(res_eval_path, sub + "_" + ses + "_" + eval_name + "_"))
+                list_res = compute_all_metrics(
+                    man_mask_file, auto_mask_file,
+                    pref = os.path.join(res_eval_path, sub + "_" + ses + "_" + eval_name + "_"))
 
                 list_res.insert(eval_name, 0)
                 list_res.insert(ses, 0)
