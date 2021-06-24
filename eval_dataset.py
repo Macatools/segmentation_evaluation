@@ -7,7 +7,7 @@ from bids.layout import BIDSLayout
 
 from eval_monoclass_seg import compute_all_metrics
 
-data_path = "/hpc/meca/data/Macaques/Macaque_hiphop"
+data_path = "/hpc/meca/data/Macaques/Macaque_hiphop/results"
 
 auto_analysis_names = ["SPM_native", "SPM_native_T1", "ANTS", "ANTS_T1"]
 
