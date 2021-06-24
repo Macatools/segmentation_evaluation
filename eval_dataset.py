@@ -1,18 +1,20 @@
 
+import os
+
+import pandas as pd
 
 from bids.layout import BIDSLayout
 
-data_path = "/hpc/meca/data/Macaques/Macaque_hiphop"
+from eval_monoclass_seg import compute_all_metrics
 
+data_path = "/hpc/meca/data/Macaques/Macaque_hiphop"
 
 auto_analysis_names = ["SPM_native", "SPM_native_T1", "ANTS", "ANTS_T1"]
 
 dataset_dirs = ["ucdavis"]
 
-from eval_monoclass_seg import compute_all_metrics
 
 
-import pandas as pd
 
 
 def eval_monomodal_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_mask"):
