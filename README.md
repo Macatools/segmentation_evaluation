@@ -1,2 +1,2 @@
 # segmentation_evaluation
-Project where we are going to put evaluation tools for NHP segmentations.
+Evaluation tools for NHP segmentations. Data organisation should follow BIDS derivatives.
