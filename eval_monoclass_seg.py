@@ -19,8 +19,8 @@ from metrics import perf_measure_seg_monomodale, coff_kappa, coff_dice, coff_jac
 
 def compute_all_metrics (seg_auto, seg_ref, pref = "img_") :
     
-    data_set_auto = seg_auto.get_data()     
-    data_set_ref = seg_ref.get_data()
+    data_set_auto =  nib.load(seg_auto).get_data()
+    data_set_ref =  nib.load(seg_ref).get_data()
 
     # Size_data
     x, y, z = data_set_ref.shape
