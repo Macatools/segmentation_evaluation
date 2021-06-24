@@ -68,5 +68,5 @@ if __name__ == '__main__':
 
     eval_monomodal_metrics_dataset("ucdavis")
 
-    for dataset in dataset_dirs
+    for dataset in dataset_dirs:
         df_dataset = eval_monomodal_metrics_dataset(dataset)
