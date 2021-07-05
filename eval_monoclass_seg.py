@@ -19,12 +19,17 @@ from metrics import perf_measure_seg_monomodale, coff_kappa, coff_dice, coff_jac
 
 def compute_all_metrics (seg_auto, seg_ref, pref = "img_") :
     
-    data_set_auto =  nib.load(seg_auto).get_data()
+    img_set_auto =  nib.load(seg_auto)
+    data_set_auto =  img_set_auto.get_data()
+
     data_set_ref =  nib.load(seg_ref).get_data()
 
     # Size_data
     x, y, z = data_set_ref.shape
     #print(x, y, z)
+
+    print(data_set_ref.shape)
+    print(data_set_auto.shape)
 
     # convertir array 3D to 1D
     auto = data_set_auto.reshape(-1)
@@ -62,10 +67,10 @@ def compute_all_metrics (seg_auto, seg_ref, pref = "img_") :
     carte_erreurEs_prim = carte_erreur_martin (Es_prim, x, y, z)
 
 
-    img_erreurEs = nib.Nifti1Image(carte_erreurEs, seg_auto.affine)
+    img_erreurEs = nib.Nifti1Image(carte_erreurEs, img_set_auto.affine)
     nib.save(img_erreurEs, pref+'erreurEs.nii.gz')
 
-    img_erreurEs_prim = nib.Nifti1Image(carte_erreurEs_prim, seg_auto.affine)
+    img_erreurEs_prim = nib.Nifti1Image(carte_erreurEs_prim, img_set_auto.affine)
     nib.save(img_erreurEs_prim, pref+'erreurEs_prim.nii.gz')
     
     return [VP, FP, VN, FN, kappa, dice, JC, LCE, GCE]
