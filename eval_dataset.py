@@ -41,6 +41,9 @@ def eval_monomodal_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
 
     results = []
     for sub in subjects:
+        if sub in ["032139", "032140", "032141", "032142"]:
+            continue
+
         for ses in sessions:
             man_mask_file = os.path.join(data_dir, "derivatives", man_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
@@ -55,9 +58,9 @@ def eval_monomodal_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
                     man_mask_file, auto_mask_file,
                     pref = os.path.join(res_eval_path, sub + "_" + ses + "_" + eval_name + "_"))
 
-                list_res.insert(eval_name, 0)
-                list_res.insert(ses, 0)
-                list_res.insert(sub, 0)
+                list_res.insert(0, eval_name)
+                list_res.insert(0, ses)
+                list_res.insert(0, sub)
 
 
     #sub, ses, eval_name, VP, FP, VN, FN, kappa, dice, JC, LCE, GCE
