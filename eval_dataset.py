@@ -66,7 +66,7 @@ def eval_monomodal_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
 
 
     #sub, ses, eval_name, VP, FP, VN, FN, kappa, dice, JC, LCE, GCE
-    df = pd.DataFrame(list_res, columns = ["Subject", "Session", "Evaluation", "VP", "FP", "VN", "FN", "Kappa", "Dice", "Jaccard", "LCE", "GCE"])
+    df = pd.DataFrame(results, columns = ["Subject", "Session", "Evaluation", "VP", "FP", "VN", "FN", "Kappa", "Dice", "Jaccard", "LCE", "GCE"])
 
     csv_name = dataset_name + "_eval_res.csv"
 
