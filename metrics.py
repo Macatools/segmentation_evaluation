@@ -11,8 +11,8 @@ Created on Tue May 11 12:17:14 2021
 # fonction de Coefficient de corrélation intra-classe ICC.
 def intraclass_correlation (path_data1,path_data2) :
     import os
-    ICC_cmd = "MeasureImageSimilarity 3 1 {} {} ".format(path_data1, path_data2)
-
+    #ICC_cmd = "MeasureImageSimilarity 3 1 {} {} ".format(path_data1, path_data2)
+    ICC_cmd = "MeasureImageSimilarity -d 3 -m CC[{},{},1,1]".format(path_data1, path_data2)
     val1 = os.system(ICC_cmd)
 
     #print(val1)
@@ -26,6 +26,10 @@ def perf_measure_seg_monomodale(tab1, tab2):
     FP = 0
     VN = 0
     FN = 0
+
+    print(tab1.shape)
+
+    print(tab2.shape)
 
     for i in range(len(tab2)): 
         if tab1[i]==1:

@@ -17,7 +17,7 @@ from metrics import perf_measure_seg_monomodale, coff_kappa, coff_dice, coff_jac
 #Segmentation_auto = nib.load("/hpc/meca/users/essamlali.a/manuel_segmentation/sinia_seg_ref/sub-032155_ses-001_run-1_brain_mask_T2.nii.gz")
 #Segmentation_ref = nib.load("/hpc/meca/users/essamlali.a/manuel_segmentation/sinia_seg_ref/sub-032155_ses-001_run-1_brain_mask_T2.nii.gz")
 
-def compute_all_metrics (seg_auto, seg_ref, pref = "img_") :
+def compute_all_monoclass_metrics (seg_auto, seg_ref, pref = "img_") :
     
     img_set_auto =  nib.load(seg_auto)
     data_set_auto =  img_set_auto.get_data()

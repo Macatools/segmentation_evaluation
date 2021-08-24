@@ -16,10 +16,12 @@ from metrics import intraclass_correlation, perf_measure_seg_multimodale, coff_k
 
 
 
-def compute_all_metrics (seg_auto,seg_ref) :
+def compute_all_multiclass_metrics (seg_auto,seg_ref) :
     
-    data_set_auto = seg_auto.get_data()     
-    data_set_ref = seg_ref.get_data()
+    img_set_auto =  nib.load(seg_auto)
+    data_set_auto =  img_set_auto.get_data()
+
+    data_set_ref =  nib.load(seg_ref).get_data()
 
     # convertir array 3D to 1D
     tab1 = data_set_auto.reshape(-1)
@@ -66,7 +68,7 @@ if __name__ == '__main__':
     seg_auto = nib.load("D:/Stage_INT/Script_metriques/Cube1.nii.gz")
     seg_ref = nib.load("D:/Stage_INT/Script_metriques/Cube3.nii.gz")
     
-    compute_all_metrics (seg_auto,seg_ref)
+    compute_all_multiclass_metrics (seg_auto,seg_ref)
 
 
 
