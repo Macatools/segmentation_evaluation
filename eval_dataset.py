@@ -48,7 +48,7 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
             for auto_analysis_name in auto_analysis_names:
                 auto_mask_file = os.path.join(data_dir, "derivatives", auto_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
-                assert os.path.exists(auto_analysis_name), "Error, could not find file {}".format(auto_analysis_name)
+                assert os.path.exists(auto_mask_file), "Error, could not find file {}".format(auto_mask_file)
 
                 eval_name = "manual-{}".format(auto_analysis_name)
 
