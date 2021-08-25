@@ -128,15 +128,10 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
     return df
 
 
-
-
-
-
 if __name__ == '__main__':
 
-    #eval_monoclass_metrics_dataset("ucdavis")
-
     for dataset in dataset_dirs:
-        #df_dataset = eval_monoclass_metrics_dataset(dataset)
+
+        df_dataset = eval_monoclass_metrics_dataset(dataset)
         df_dataset = eval_multiclass_metrics_dataset(dataset)
 
