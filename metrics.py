@@ -14,14 +14,27 @@ def intraclass_correlation (path_data1,path_data2) :
     #ICC_cmd = "MeasureImageSimilarity 3 1 {} {} ".format(path_data1, path_data2)
     #val1 = os.system(ICC_cmd)
 
+
     import subprocess
-    ICC_cmd = ["MeasureImageSimilarity", "-d", "3",  "-m",  "CC[{},{},1,1]".format(path_data1, path_data2)]
-    stdout_data, stderr_data = subprocess.Popen(ICC_cmd, shell = True, stdin = None, stdout = subprocess.PIPE, stderr = subprocess.PIPE, encoding = 'utf8').communicate(0)
+    ICC_cmd = ["MeasureImageSimilarity", "-d 3 -m CC[{},{},1,1]".format(path_data1, path_data2)]
+    print (ICC_cmd)
+
+    proc = subprocess.Popen(ICC_cmd, shell = True, stdin = None, stdout = subprocess.PIPE, stderr = subprocess.PIPE, encoding = 'utf8')
+    stdout_data, stderr_data = proc.communicate(0)
 
     print(stdout_data)
     print(stderr_data)
 
     val1 = float(stdout_data)
+
+    return val1
+
+
+
+
+    import subprocess
+    ICC_cmd = "MeasureImageSimilarity -d 3 -m CC[{},{},1,1]".format(path_data1, path_data2)
+    val1 = subprocess.Popen(ICC_cmd)
 
     return val1
 
