@@ -17,6 +17,8 @@ def intraclass_correlation (path_data1,path_data2) :
     import subprocess
     ICC_cmd = ["MeasureImageSimilarity", "-d", "3",  "-m",  "CC[{},{},1,1]".format(path_data1, path_data2)]
     stdout_data, stderr_data = subprocess.Popen(ICC_cmd).communicate()
+    print(stdout_data)
+    print(stderr_data)
 
     val1 = float(stdout_data)
 
