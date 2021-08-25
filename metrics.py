@@ -21,23 +21,9 @@ def intraclass_correlation (path_data1,path_data2) :
 
     proc = subprocess.Popen(ICC_cmd, shell = True, stdin = None, stdout = subprocess.PIPE, stderr = subprocess.PIPE, encoding = 'utf8')
     stdout_data, stderr_data = proc.communicate(0)
-
-    print(stdout_data)
-    print(stderr_data)
-
     val1 = float(stdout_data)
 
     return val1
-
-
-
-
-    import subprocess
-    ICC_cmd = "MeasureImageSimilarity -d 3 -m CC[{},{},1,1]".format(path_data1, path_data2)
-    val1 = subprocess.Popen(ICC_cmd)
-
-    return val1
-
 
 # fonction de calcule des 4 cardinaliés VP, FP, VN, FN, pour la segmentation Monomodale (WM ou GM ou CSF ou Brain_Mask)
 def perf_measure_seg_monomodale(tab1, tab2):

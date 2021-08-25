@@ -50,7 +50,7 @@ def compute_all_multiclass_metrics (seg_auto,seg_ref) :
     JC = coff_jaccard(VP, FP, VN, FN)
     print("jaccard : ", JC)
     
-    return [VP, FP, VN, FN, kappa, dice, JC]
+    return [ICC, VP, FP, VN, FN, kappa, dice, JC]
 
 
 
