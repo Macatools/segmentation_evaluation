@@ -43,12 +43,16 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
         for ses in sessions:
             man_mask_file = os.path.join(data_dir, "derivatives", man_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
+            assert os.path.exists(man_mask_file), "Error, could not find file {}".format(man_mask_file)
+
             for auto_analysis_name in auto_analysis_names:
                 auto_mask_file = os.path.join(data_dir, "derivatives", auto_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
+                assert os.path.exists(auto_analysis_name), "Error, could not find file {}".format(auto_analysis_name)
+
                 eval_name = "manual-{}".format(auto_analysis_name)
 
-                print("Comparing {} and {}".format(man_mask_file, auto_mask_file))
+                print("Comparing monoclass{} and {}".format(man_analysis_name, auto_analysis_name))
 
                 list_res = compute_all_monoclass_metrics(
                     man_mask_file, auto_mask_file,
@@ -101,12 +105,16 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
         for ses in sessions:
             man_mask_file = os.path.join(data_dir, "derivatives", man_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
+            assert os.path.exists(man_mask_file), "Error, could not find file {}".format(man_mask_file)
+
             for auto_analysis_name in auto_analysis_names:
                 auto_mask_file = os.path.join(data_dir, "derivatives", auto_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
+                assert os.path.exists(auto_analysis_name), "Error, could not find file {}".format(auto_analysis_name)
+
                 eval_name = "manual-{}".format(auto_analysis_name)
 
-                print("Comparing {} and {}".format(man_mask_file, auto_mask_file))
+                print("Comparing multiclass{} and {}".format(man_analysis_name, auto_analysis_name))
 
                 list_res = compute_all_multiclass_metrics(
                     man_mask_file, auto_mask_file)
@@ -132,6 +140,6 @@ if __name__ == '__main__':
 
     for dataset in dataset_dirs:
 
-        df_dataset = eval_monoclass_metrics_dataset(dataset)
+        #df_dataset = eval_monoclass_metrics_dataset(dataset)
         df_dataset = eval_multiclass_metrics_dataset(dataset)
 
