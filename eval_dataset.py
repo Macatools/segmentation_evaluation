@@ -127,7 +127,7 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
 
 
     #sub, ses, eval_name, VP, FP, VN, FN, kappa, dice, JC
-    df = pd.DataFrame(results, columns = ["Subject", "Session", "Evaluation", "VP", "FP", "VN", "FN", "Kappa", "Dice", "Jaccard"])
+    df = pd.DataFrame(results, columns = ["Subject", "Session", "Evaluation", "ICC", "VP", "FP", "VN", "FN", "Kappa", "Dice", "Jaccard"])
 
     csv_name = "multiclass_" + dataset_name + "_eval_res.csv"
 
