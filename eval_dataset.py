@@ -140,6 +140,6 @@ if __name__ == '__main__':
 
     for dataset in dataset_dirs:
 
-        #df_dataset = eval_monoclass_metrics_dataset(dataset)
-        df_dataset = eval_multiclass_metrics_dataset(dataset)
+        df_dataset = eval_monoclass_metrics_dataset(dataset)
+        #df_dataset = eval_multiclass_metrics_dataset(dataset)
 
