@@ -38,6 +38,10 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
 
     results = []
     for sub in subjects:
+
+
+        print("Running monoclass sub {} ses {}".format(sub, ses))
+
         #if sub in ["032139", "032140", "032141", "032142"]:
         #    continue
         for ses in sessions:
@@ -52,7 +56,7 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
 
                 eval_name = "manual-{}".format(auto_analysis_name)
 
-                print("Comparing monoclass{} and {}".format(man_analysis_name, auto_analysis_name))
+                print("Comparing monoclass {} and {}".format(man_analysis_name, auto_analysis_name))
 
                 list_res = compute_all_monoclass_metrics(
                     man_mask_file, auto_mask_file,
@@ -104,7 +108,7 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
         #    continue
         for ses in sessions:
 
-            print("Running sub {} ses {}".format(sub, ses))
+            print("Running multiclass sub {} ses {}".format(sub, ses))
 
             man_mask_file = os.path.join(data_dir, "derivatives", man_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
@@ -117,7 +121,7 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
 
                 eval_name = "manual-{}".format(auto_analysis_name)
 
-                print("Comparing multiclass{} and {}".format(man_analysis_name, auto_analysis_name))
+                print("Comparing multiclass {} and {}".format(man_analysis_name, auto_analysis_name))
 
                 list_res = compute_all_multiclass_metrics(
                     man_mask_file, auto_mask_file)
