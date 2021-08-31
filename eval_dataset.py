@@ -39,7 +39,7 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
     results = []
     for sub in subjects:
 
-        if sub not in ["Celine"]:
+        if sub not in ["Odor"]:
             continue
 
         for ses in sessions:
