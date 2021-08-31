@@ -39,7 +39,13 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
     results = []
     for sub in subjects:
 
+        if sub not in ["Celine"]:
+            continue
+
         for ses in sessions:
+
+            if ses not in ["T1"]:
+                continue
 
             print("Running monoclass sub {} ses {}".format(sub, ses))
 
