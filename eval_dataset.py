@@ -39,12 +39,10 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
     results = []
     for sub in subjects:
 
-
-        print("Running monoclass sub {} ses {}".format(sub, ses))
-
-        #if sub in ["032139", "032140", "032141", "032142"]:
-        #    continue
         for ses in sessions:
+
+            print("Running monoclass sub {} ses {}".format(sub, ses))
+
             man_mask_file = os.path.join(data_dir, "derivatives", man_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
             assert os.path.exists(man_mask_file), "Error, could not find file {}".format(man_mask_file)
