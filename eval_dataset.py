@@ -35,13 +35,12 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
     except OSError:
         print("res_eval_path {} already exists".format(res_eval_path))
 
-
     results = []
     for sub in subjects:
 
         for ses in sessions:
 
-            print("Running monoclass sub {} ses {}".format(sub, ses))
+            print("**** Running monoclass sub {} ses {} ****".format(sub, ses))
 
             man_mask_file = os.path.join(data_dir, "derivatives", man_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
@@ -106,7 +105,7 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
         #    continue
         for ses in sessions:
 
-            print("Running multiclass sub {} ses {}".format(sub, ses))
+            print("**** Running multiclass sub {} ses {} ****".format(sub, ses))
 
             man_mask_file = os.path.join(data_dir, "derivatives", man_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
