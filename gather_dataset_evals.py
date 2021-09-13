@@ -43,6 +43,13 @@ def read_all_dataset_monoclass_evals():
         df_dataset = read_dataset_monoclass_eval(dataset)
         print(df_dataset)
 
+
+        stats_df_dataset  = df_dataset.groupby("Evaluation").mean()
+
+        print(stats_df_dataset)
+
+        stats_df_dataset.to_csv(os.path.join(data_path,"Stats_all_monoclass_evals_{}.csv".format(dataset)), columns= ["VP", "FP", "VN", "FN", "Kappa", "Dice", "Jaccard", "LCE", "GCE"])
+
         df_dataset_monoclass_evals.append(df_dataset)
 
     all_df = pd.concat(df_dataset_monoclass_evals)
