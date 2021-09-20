@@ -18,13 +18,15 @@ def read_dataset_monoclass_eval(dataset_name):
 
     print(data_dir)
 
-    if os.path.exists(data_dir):
+    res_eval_path = os.path.join(data_dir, "derivatives", "evaluation_results")
 
-        res_eval_path = os.path.join(data_dir, "derivatives", "evaluation_results")
+    csv_name = "monoclass_" + dataset_name + "_eval_res.csv"
 
-        csv_name = "monoclass_" + dataset_name + "_eval_res.csv"
+    csv_file = os.path.join(res_eval_path, csv_name)
 
-        df_dataset = pd.read_csv(os.path.join(res_eval_path, csv_name))
+    if os.path.exists(csv_file):
+
+        df_dataset = pd.read_csv(csv_file)
 
         df_dataset["Dataset"] = [dataset_name]*len(df_dataset.index)
 
