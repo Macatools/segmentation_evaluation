@@ -75,7 +75,7 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
 
 def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_dseg"):
 
-    data_dir = os.path.join(data_path, dataset_name)
+    manual_seg_dir = os.path.join(data_path, dataset_name, "derivatives", man_analysis_name)
 
     layout = BIDSLayout(data_dir)
 
