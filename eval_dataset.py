@@ -77,10 +77,7 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
 
     data_dir = os.path.join(data_path, dataset_name)
 
-
-    manual_seg_dir = os.path.join(data_dir, "derivatives", man_analysis_name)
-
-    layout = BIDSLayout(manual_seg_dir)
+    layout = BIDSLayout(data_dir)
 
     # Verbose
     print("BIDS layout:", layout)
