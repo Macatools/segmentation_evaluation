@@ -11,9 +11,6 @@ from eval_multiclass_seg import compute_all_multiclass_metrics
 
 from define_variables import *
 
-
-
-
 def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_mask"):
 
     data_dir = os.path.join(data_path, dataset_name)
@@ -76,7 +73,6 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
     return df
 
 
-
 def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_dseg"):
 
     data_dir = os.path.join(data_path, dataset_name)
@@ -101,8 +97,9 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
 
     results = []
     for sub in subjects:
-        #if sub in ["032139", "032140", "032141", "032142"]:
-        #    continue
+        if sub in ["032139", "032141", "032142", "032143"]:
+            continue
+
         for ses in sessions:
 
             print("**** Running multiclass sub {} ses {} ****".format(sub, ses))
@@ -144,6 +141,6 @@ if __name__ == '__main__':
 
     for dataset in dataset_dirs:
 
-        df_dataset = eval_monoclass_metrics_dataset(dataset)
-        #df_dataset = eval_multiclass_metrics_dataset(dataset)
+        #df_dataset = eval_monoclass_metrics_dataset(dataset)
+        df_dataset = eval_multiclass_metrics_dataset(dataset)
 
