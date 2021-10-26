@@ -11,7 +11,7 @@ from eval_multiclass_seg import compute_all_multiclass_metrics
 
 from define_variables import *
 
-def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_mask"):
+def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_mask", output_dir="evaluation_results"):
 
     data_dir = os.path.join(data_path, dataset_name)
 
@@ -25,7 +25,7 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
     print(subjects)
     print(sessions)
 
-    res_eval_path = os.path.join(data_dir, "derivatives", "evaluation_results")
+    res_eval_path = os.path.join(data_dir, "derivatives", output_dir)
 
     try:
         os.makedirs(res_eval_path)
@@ -73,7 +73,7 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
     return df
 
 
-def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_dseg"):
+def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_dseg", output_dir = "evaluation_results"):
 
     data_dir = os.path.join(data_path, dataset_name)
 
@@ -87,7 +87,7 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
     print(subjects)
     print(sessions)
 
-    res_eval_path = os.path.join(data_dir, "derivatives", "evaluation_results")
+    res_eval_path = os.path.join(data_dir, "derivatives", output_dir)
 
     try:
         os.makedirs(res_eval_path)
@@ -142,5 +142,5 @@ if __name__ == '__main__':
     for dataset in dataset_dirs:
 
         #df_dataset = eval_monoclass_metrics_dataset(dataset)
-        df_dataset = eval_multiclass_metrics_dataset(dataset)
+        df_dataset = eval_multiclass_metrics_dataset(dataset_name=dataset, man_analysis_name = "semimanual_segmentation")
 
