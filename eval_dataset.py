@@ -9,21 +9,26 @@ from eval_monoclass_seg import compute_all_monoclass_metrics
 
 from eval_multiclass_seg import compute_all_multiclass_metrics
 
-from define_variables import *
+from define_variables import bids_path, data_path, dataset_dirs, auto_analysis_names, subjects, sessions
 
 def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_mask", output_dir="evaluation_results"):
 
-    data_dir = os.path.join(data_path, dataset_name)
+    bids_dir = os.path.join(bids_path)
 
-    layout = BIDSLayout(data_dir)
+    # was very long
+    layout = BIDSLayout(bids_dir)
+    ### from https://github.com/bids-standard/pybids/pull/523
+    layout = BIDSLayout(bids_dir, database_file="bidsdb.sql",)
 
     # Verbose
     print("BIDS layout:", layout)
-    subjects = layout.get_subjects()
-    sessions = layout.get_sessions()
+    all_subjects = layout.get_subjects()
+    all_sessions = layout.get_sessions()
 
-    print(subjects)
-    print(sessions)
+    print(all_subjects)
+    print(all_sessions)
+
+    data_dir = os.path.join(data_path, dataset_name)
 
     res_eval_path = os.path.join(data_dir, "derivatives", output_dir)
 
@@ -34,8 +39,11 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
 
     results = []
     for sub in subjects:
+        assert sub in all_subjects, "Error, subject {} was not found in bids dir {}".format(sub, all_subjects)
 
         for ses in sessions:
+
+            assert ses in all_sessions, "Error, session {} was not found in bids dir {}".format(ses, all_subjects)
 
             print("**** Running monoclass sub {} ses {} ****".format(sub, ses))
 
@@ -75,17 +83,20 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
 
 def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_dseg", output_dir = "evaluation_results"):
 
-    data_dir = os.path.join(data_path, dataset_name)
 
-    layout = BIDSLayout(data_dir)
+    bids_dir = os.path.join(bids_path)
+
+    layout = BIDSLayout(bids_dir)
 
     # Verbose
     print("BIDS layout:", layout)
-    subjects = layout.get_subjects()
-    sessions = layout.get_sessions()
+    all_subjects = layout.get_subjects()
+    all_sessions = layout.get_sessions()
 
-    print(subjects)
-    print(sessions)
+    print(all_subjects)
+    print(all_sessions)
+
+    data_dir = os.path.join(data_path, dataset_name)
 
     res_eval_path = os.path.join(data_dir, "derivatives", output_dir)
 
@@ -94,13 +105,13 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
     except OSError:
         print("res_eval_path {} already exists".format(res_eval_path))
 
-
     results = []
     for sub in subjects:
-        if sub in ["032139", "032141", "032142", "032143"]:
-            continue
+        assert sub in all_subjects, "Error, subject {} was not found in bids dir {}".format(sub, all_subjects)
 
         for ses in sessions:
+
+            assert ses in all_sessions, "Error, session {} was not found in bids dir {}".format(ses, all_subjects)
 
             print("**** Running multiclass sub {} ses {} ****".format(sub, ses))
 
@@ -118,7 +129,8 @@ def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_se
                 print("Comparing multiclass {} and {}".format(man_analysis_name, auto_analysis_name))
 
                 list_res = compute_all_multiclass_metrics(
-                    man_mask_file, auto_mask_file)
+                    man_mask_file, auto_mask_file,
+                    pref = os.path.join(res_eval_path, sub + "_" + ses + "_" + eval_name + "_"))
 
                 list_res.insert(0, eval_name)
                 list_res.insert(0, ses)
@@ -141,6 +153,6 @@ if __name__ == '__main__':
 
     for dataset in dataset_dirs:
 
-        #df_dataset = eval_monoclass_metrics_dataset(dataset)
+        #df_dataset = eval_monoclass_metrics_dataset(dataset_name=dataset, man_analysis_name = "semimanual_segmentation")
         df_dataset = eval_multiclass_metrics_dataset(dataset_name=dataset, man_analysis_name = "semimanual_segmentation")
 
