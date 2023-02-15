@@ -5,28 +5,12 @@ import pandas as pd
 
 from bids.layout import BIDSLayout
 
-from eval_monoclass_seg import compute_all_monoclass_metrics
-
 from eval_multiclass_seg import compute_all_multiclass_metrics
 
-from define_variables import bids_path, data_path, dataset_dirs, auto_analysis_names, subjects, sessions
+from define_variables import bids_path, data_path, dataset_dirs, auto_analysis_names, man_analysis_name, subjects, sessions, tab_auto_suffix, man_suffix
 
-def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_mask", output_dir="evaluation_results"):
+def new_eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", tab_auto_suffix = {}, man_suffix = "space-native_desc-brain_dseg_padded", output_dir = "new_evaluation_results"):
 
-    bids_dir = os.path.join(bids_path)
-
-    # was very long
-    layout = BIDSLayout(bids_dir)
-    ### from https://github.com/bids-standard/pybids/pull/523
-    layout = BIDSLayout(bids_dir, database_file="bidsdb.sql",)
-
-    # Verbose
-    print("BIDS layout:", layout)
-    all_subjects = layout.get_subjects()
-    all_sessions = layout.get_sessions()
-
-    print(all_subjects)
-    print(all_sessions)
 
     data_dir = os.path.join(data_path, dataset_name)
 
@@ -39,110 +23,46 @@ def eval_monoclass_metrics_dataset(dataset_name, man_analysis_name = "manual_seg
 
     results = []
     for sub in subjects:
-        assert sub in all_subjects, "Error, subject {} was not found in bids dir {}".format(sub, all_subjects)
-
         for ses in sessions:
-
-            assert ses in all_sessions, "Error, session {} was not found in bids dir {}".format(ses, all_subjects)
-
-            print("**** Running monoclass sub {} ses {} ****".format(sub, ses))
-
-            man_mask_file = os.path.join(data_dir, "derivatives", man_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
-
-            assert os.path.exists(man_mask_file), "Error, could not find file {}".format(man_mask_file)
-
-            for auto_analysis_name in auto_analysis_names:
-                auto_mask_file = os.path.join(data_dir, "derivatives", auto_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
-
-                assert os.path.exists(auto_mask_file), "Error, could not find file {}".format(auto_mask_file)
-
-                eval_name = "manual-{}".format(auto_analysis_name)
-
-                print("Comparing monoclass {} and {}".format(man_analysis_name, auto_analysis_name))
-
-                list_res = compute_all_monoclass_metrics(
-                    man_mask_file, auto_mask_file,
-                    pref = os.path.join(res_eval_path, sub + "_" + ses + "_" + eval_name + "_"))
-
-                list_res.insert(0, eval_name)
-                list_res.insert(0, ses)
-                list_res.insert(0, sub)
-
-                results.append(list_res)
-
-
-    #sub, ses, eval_name, VP, FP, VN, FN, kappa, dice, JC, LCE, GCE
-    df = pd.DataFrame(results, columns = ["Subject", "Session", "Evaluation", "VP", "FP", "VN", "FN", "Kappa", "Dice", "Jaccard", "LCE", "GCE"])
-
-    csv_name = "monoclass_" + dataset_name + "_eval_res.csv"
-
-    df.to_csv(os.path.join(res_eval_path, csv_name))
-
-    return df
-
-
-def eval_multiclass_metrics_dataset(dataset_name, man_analysis_name = "manual_segmentation", suffix = "space-orig_desc-brain_dseg", output_dir = "evaluation_results"):
-
-
-    bids_dir = os.path.join(bids_path)
-
-    layout = BIDSLayout(bids_dir)
-
-    # Verbose
-    print("BIDS layout:", layout)
-    all_subjects = layout.get_subjects()
-    all_sessions = layout.get_sessions()
-
-    print(all_subjects)
-    print(all_sessions)
-
-    data_dir = os.path.join(data_path, dataset_name)
-
-    res_eval_path = os.path.join(data_dir, "derivatives", output_dir)
-
-    try:
-        os.makedirs(res_eval_path)
-    except OSError:
-        print("res_eval_path {} already exists".format(res_eval_path))
-
-    results = []
-    for sub in subjects:
-        assert sub in all_subjects, "Error, subject {} was not found in bids dir {}".format(sub, all_subjects)
-
-        for ses in sessions:
-
-            assert ses in all_sessions, "Error, session {} was not found in bids dir {}".format(ses, all_subjects)
 
             print("**** Running multiclass sub {} ses {} ****".format(sub, ses))
 
-            man_mask_file = os.path.join(data_dir, "derivatives", man_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
-
-            assert os.path.exists(man_mask_file), "Error, could not find file {}".format(man_mask_file)
+            man_mask_file = os.path.join(data_dir, "derivatives", man_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, man_suffix))
 
             for auto_analysis_name in auto_analysis_names:
-                auto_mask_file = os.path.join(data_dir, "derivatives", auto_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, suffix))
 
-                assert os.path.exists(auto_mask_file), "Error, could not find file {}".format(auto_mask_file)
+                if len(tab_auto_suffix.keys())==0:
+                    auto_suffix = "space-native_desc-brain_dseg"
+                elif auto_analysis_name in tab_auto_suffix.keys():
+                    auto_suffix = tab_auto_suffix[auto_analysis_name]
+                else:
+                    print("Error could not find {} in {}".format(auto_analysis_name,tab_auto_suffix.keys()))
 
-                eval_name = "manual-{}".format(auto_analysis_name)
+                auto_mask_file = os.path.join(data_dir, "derivatives", auto_analysis_name, "sub-{}".format(sub), "ses-{}".format(ses), "anat", "sub-{}_ses-{}_{}.nii.gz".format(sub, ses, auto_suffix))
 
-                print("Comparing multiclass {} and {}".format(man_analysis_name, auto_analysis_name))
+                if os.path.exists(auto_mask_file) and os.path.exists(man_mask_file):
 
-                list_res = compute_all_multiclass_metrics(
-                    man_mask_file, auto_mask_file,
-                    pref = os.path.join(res_eval_path, sub + "_" + ses + "_" + eval_name + "_"))
+                    eval_name = "manual-{}".format(auto_analysis_name)
 
-                list_res.insert(0, eval_name)
-                list_res.insert(0, ses)
-                list_res.insert(0, sub)
+                    print("Comparing multiclass {} and {}".format(man_analysis_name, auto_analysis_name))
 
-                results.append(list_res)
+                    list_res = compute_all_multiclass_metrics(
+                        man_mask_file, auto_mask_file,
+                        pref = os.path.join(res_eval_path, sub + "_" + ses + "_" + eval_name + "_"))
+
+                    list_res.insert(0, eval_name)
+                    list_res.insert(0, ses)
+                    list_res.insert(0, sub)
+
+                    results.append(list_res)
+                else:
+                    print("Skipping, {} and/or {} are missing".format(auto_mask_file, man_mask_file))
 
 
     #sub, ses, eval_name, VP, FP, VN, FN, kappa, dice, JC
-    df = pd.DataFrame(results, columns = ["Subject", "Session", "Evaluation", "ICC", "VP", "FP", "VN", "FN", "Kappa", "Dice", "Jaccard"])
+    df = pd.DataFrame(results, columns = ["Subject", "Session", "Evaluation", "ICC", "VP", "FP", "VN", "FN", "Kappa", "Dice", "Jaccard", "LCE", "GCE"])
 
-    csv_name = "multiclass_" + dataset_name + "_eval_res.csv"
+    csv_name = "multiclass_eval_res.csv"
 
     df.to_csv(os.path.join(res_eval_path, csv_name))
 
@@ -153,6 +73,8 @@ if __name__ == '__main__':
 
     for dataset in dataset_dirs:
 
-        #df_dataset = eval_monoclass_metrics_dataset(dataset_name=dataset, man_analysis_name = "semimanual_segmentation")
-        df_dataset = eval_multiclass_metrics_dataset(dataset_name=dataset, man_analysis_name = "semimanual_segmentation")
+        print(dataset)
+
+        df_dataset = new_eval_multiclass_metrics_dataset(dataset_name=dataset, man_analysis_name = man_analysis_name, tab_auto_suffix=tab_auto_suffix, man_suffix=man_suffix)
+
 

@@ -18,6 +18,12 @@ def read_dataset_monoclass_eval(dataset_name):
 
     res_eval_path = os.path.join(data_dir, "derivatives", "evaluation_results")
 
+    try:
+        os.makedirs(res_eval_path)
+    except OSError:
+        print("res_eval_path {} already exists".format(res_eval_path))
+
+
     csv_name = "monoclass_" + dataset_name + "_eval_res.csv"
 
     csv_file = os.path.join(res_eval_path, csv_name)
@@ -31,7 +37,7 @@ def read_dataset_monoclass_eval(dataset_name):
     else:
         print("Error, dataset {} was not computed, {} do not exists".format(dataset_name, csv_file))
         exit(-1)
-    
+
     stats_df_dataset  = df_dataset.groupby("Evaluation").mean()
 
     print(stats_df_dataset)
@@ -64,6 +70,11 @@ def read_dataset_multiclass_eval(dataset_name):
     print(data_dir)
 
     res_eval_path = os.path.join(data_dir, "derivatives", "evaluation_results")
+
+    try:
+        os.makedirs(res_eval_path)
+    except OSError:
+        print("res_eval_path {} already exists".format(res_eval_path))
 
     csv_name = "multiclass_" + dataset_name + "_eval_res.csv"
 
